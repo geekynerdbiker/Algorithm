@@ -17,30 +17,41 @@ public class Main {
         int T = kb.nextInt();
         
         for( int i = 0; i < T; i++ ) {
-            int M = kb.nextInt();
-            int N = kb.nextInt();
+            int m = kb.nextInt();
+            int n = kb.nextInt();
             int x = kb.nextInt();
             int y = kb.nextInt();
             
-            int tx = 0, ty = 0;
-            int year = 0;
+            int gcb = GCB(m, n);
+            int lcm = m * n / gcb;
+            int year = -1;
             
-            while( tx != x || ty != y ) {
-                tx++;
-                ty++;
-                year++;
+            int lDiff = x - 1;
+            int rDiff = y - 1;
+            
+            for (int j = 0; (m * j) < lcm; j++) {
+                int mulX = m * j;
+                int cur = mulX + lDiff + 1;
+                int right = (cur - 1) % n + 1;
                 
-                if( tx == M && ty == N ) {
-                    year = -1;
-                    break;
-                }
-                
-                if( tx == M )
-                    tx = 0;
-                if( ty == N )
-                    ty = 0;
+                if (right == y)
+                    year = cur;
             }
             System.out.println(year);
+        }
+    }
+    public static int GCB(int a, int b) {
+        if( a > b ) {
+            if( a % b != 0 )
+                return GCB(b, a % b);
+            else
+                return b;
+        }
+        else {
+            if( b % a != 0 )
+                return GCB(a, b % a);
+            else
+                return a;
         }
     }
 }
