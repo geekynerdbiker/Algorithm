@@ -24,7 +24,7 @@ public class Main {
     }
     
     public static boolean isPrime(int k) {    // the sieve of Eratosthenes
-        if( k == 1 || k % 2 == 0 )
+        if( k == 1 )
             return false;
         
         int rk = (int)Math.sqrt(k);
