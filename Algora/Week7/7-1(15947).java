@@ -4,15 +4,38 @@ public class Main {
     private static final Scanner kb = new Scanner(System.in);
     
     public static void main(String args[]) {
-        int N = kb.nextInt(), count = 1, t = 0;
+        String [] song = { "baby", "sukhwan", "tururu", "turu", "very", "cute", "tururu", "turu", "in", "bed", "tururu", "turu", "baby", "sukhwan" };
         
-        while( N > 0 ) {
-            if( N < count )
-                count = 1;
-            N -= count;
-            count++;
-            t++;
+        int N = kb.nextInt();
+        int ru = 0;
+        String word;
+        
+        if( N > 14 ) {
+            ru = N / 14;
+            N = N % 14;
         }
-        System.out.println(t);
+        if( N == 0 ) word = song[13];
+        else word = song[N-1];
+        
+        if( word.equals("tururu") && ru <= 2 )
+            for( int i = 0; i < ru; i++ )
+                word = word.concat("ru");
+        
+        else if( word.equals("turu") && ru <= 3 )
+            for( int i = 0; i < ru; i ++ )
+                word = word.concat("ru");
+        
+        else if( word.equals("tururu") ) {
+            word = "tu+ru*";
+            int ruru = 2 + ru;
+            word = word.concat(Integer.toString(ruru));
+        }
+        
+        else if( word.equals("turu") ) {
+            word = "tu+ru*";
+            int ruru = 1 + ru;
+            word = word.concat(Integer.toString(ruru));
+        }
+        System.out.println(word);
     }
 }
