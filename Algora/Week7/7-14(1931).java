@@ -4,29 +4,33 @@ public class Main {
     private static final Scanner kb = new Scanner(System.in);
     
     public static void main(String args[]) {
-        PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new ComparatorDescending());
-        
         int N = kb.nextInt();
+        int [][] time = new int [N][2];
         
         for( int i = 0; i < N; i++ ) {
-            int k = kb.nextInt();
-            
-            if( k == 0 )
-                if( heap.peek() != null )
-                    System.out.println(heap.poll());
-                else System.out.println(0);
-                else
-                    heap.add(k);
+            time[i][0] = kb.nextInt();
+            time[i][1] = kb.nextInt();
         }
-    }
-}
-
-class ComparatorDescending implements Comparator<Integer> {
-    
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        // TODO Auto-generated method stub
-        if( o1 < o2 ) return 1;
-        else return -1;
+        
+        Arrays.sort(time, new Comparator<int []>() {
+            
+            @Override
+            public int compare(int [] start, int [] end) {
+                // TODO Auto-generated method stub
+                if( start[1] == end[1] )
+                    return Integer.compare(start[0], end[0]);
+                return Integer.compare(start[1], end[1]);
+            }
+        });
+        
+        int cur = 0;
+        int count = 0;
+        
+        for( int i = 0; i < N; i++ )
+            if( cur <= time[i][0] ) {
+                cur = time[i][1];
+                count++;
+            }        
+        System.out.println(count);
     }
 }
