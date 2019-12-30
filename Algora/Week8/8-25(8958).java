@@ -1,19 +1,28 @@
-import java.util.*;
-import java.io.*;
+import java.util.Scanner;
 
 public class Main {
-    private static final Scanner kb = new Scanner(System.in);
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    
-    public static void main(String args[]) throws IOException {
-        int N = kb.nextInt();
+    public static void main(String[] args) {
+        Scanner kb = new Scanner(System.in);
         
-        for( int i = 1; i <= N; i++ ) {
-            for( int j = i; j < N; j++ )
-                System.out.print(" ");
-            for( int k = 1; k <= 2*i - 1; k++ )
-                System.out.print("*");
-            System.out.println();
+        int n = kb.nextInt();
+        int score = 0, sum = 0;
+        String answer = kb.nextLine();
+        
+        for( int i = 0; i < n; i++ ) {
+            answer = kb.nextLine();
+            
+            for( int j = 0; j < answer.length(); j++ ) {
+                char[] arr = answer.toCharArray();
+                if( arr[j] == 'O' )
+                    score++;
+                else
+                    score = 0;
+                sum += score;
+            }
+            
+            System.out.println(sum);
+            sum = 0; score = 0;
         }
+        kb.close();
     }
 }
