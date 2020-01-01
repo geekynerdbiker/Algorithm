@@ -9,15 +9,16 @@ public class Main {
         int N = kb.nextInt();
         char [] s = br.readLine().toCharArray();
         
-        System.out.println(Hashing(N, s));
-    }
-    
-    public static long Hashing(int n, char [] string) {
-        long result = 0;
+        long result = 0, R = 1;
         
-        for( int i = 0; i < n; i++ )
-            result += (string[i]-'a'+1) * Math.pow(31, i);
         
-        return result % 1234567891;
+        for( int i = 0; i < N; i++ ) {
+            result += (s[i]-'a'+1) * R;
+            result %= 1234567891;
+            R *= 31;
+            R %= 1234567891;
+        }
+        
+        System.out.println(result);
     }
 }
