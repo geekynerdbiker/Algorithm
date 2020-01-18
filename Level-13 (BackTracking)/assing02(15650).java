@@ -31,10 +31,14 @@ public class Main {
 		
 		for( int i = 1; i <= N; i++ ) {
 			if( visited[i] ) continue;
-			visited[i] = true;
+			for( int j = 1; j <= i; j++ )
+				visited[j] = true;
+			
 			arr[index] = i;
 			recursion(index + 1, N, M);
-			visited[i] = false;
+			
+			for( int j = 1; j <= i; j++ )
+				visited[j] = false;
 		}
 	}
 }
