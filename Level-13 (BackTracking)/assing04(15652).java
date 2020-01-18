@@ -12,10 +12,10 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken()), M = Integer.parseInt(st.nextToken());
 
-		recursion(0, N, M);		
+		backtrack(0, N, M);		
 	}
 	
-	public static void recursion(int index, int N, int M) throws IOException {
+	public static void backtrack(int index, int N, int M) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		
 		if( index == M ) {
@@ -35,7 +35,7 @@ public class Main {
 				visited[j] = true;
 			
 			arr[index] = i;
-			recursion(index + 1, N, M);
+			backtrack(index + 1, N, M);
 			
 			for( int j = 1; j < i; j++ )
 				visited[j] = false;
