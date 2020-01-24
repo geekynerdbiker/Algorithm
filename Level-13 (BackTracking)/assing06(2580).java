@@ -23,7 +23,7 @@ public class Main {
 	public static void backtrack(int index)	throws IOException {
 		if( index == Points.size() ) {
 			printBoard();
-			return;
+			System.exit(0);
 		}
 
 		else {
@@ -33,7 +33,7 @@ public class Main {
 					sudoku[current.x][current.y] = i;
 					backtrack(index+1);
 					sudoku[current.x][current.y] = 0;
-					
+
 				}
 			}
 		}
@@ -53,16 +53,13 @@ public class Main {
 			for( int j = yTmp; j < yTmp + 3; j++ )
 				if( sudoku[i][j] == value ) return false;
 
-
 		return true;
 	}
 
 	public static void printBoard() throws IOException {
 		for( int i = 1; i <= N; i++ ) {
-			for( int j = 1; j <= N; j++ ) {
+			for( int j = 1; j <= N; j++ )
 				System.out.print(sudoku[i][j] + " ");
-				
-			}
 			System.out.println();
 		}
 	}
