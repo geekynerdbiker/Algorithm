@@ -6,6 +6,7 @@ public class Main {
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 	public static int N, answer;
+	public static boolean [] visited;
 	public static ArrayList<Integer> set;
 	public static void main(String args[]) throws IOException {
 		N = Integer.parseInt(br.readLine());
@@ -17,12 +18,32 @@ public class Main {
 			set.add(Integer.parseInt(st.nextToken()));
 
 		set.sort(new pComparator());
+		visited = new boolean [set.size()];
 
-		bw.write("");
+		bw.write("Start\n");
+		matchNumber(0, 1);
+		bw.write("End");
+		
 		bw.flush();
 	}
 
-	public static void backtrack(int index) {
+	public static void matchNumber(int sum, int n) throws IOException {
+		if( sum == n ) matchNumber(0, n+1);
+		for( int i = 0; i < set.size(); i++ ) {
+			if( visited[i] ) continue;
+			for( int j = 0; j <= i; j++ )
+				visited[j] = true;
+
+			if( sum + set.get(i) <= n ) matchNumber(sum + set.get(i), n);
+			else {
+				bw.write(n);
+				bw.flush();
+				return;
+			}
+
+			for( int j = 0; j <= i; j++ )
+				visited[j] = false;
+		}
 	}
 }
 
