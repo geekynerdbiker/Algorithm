@@ -17,41 +17,30 @@ public class Main {
 		for( int i = 0; i < N; i++ )
 			set.add(Integer.parseInt(st.nextToken()));
 
-		set.sort(new pComparator());
 		visited = new boolean [set.size()];
 
-		bw.write("Start\n");
-		matchNumber(0, 1);
-		bw.write("End");
-		
-		bw.flush();
+		backtrack(0, 1);
 	}
 
-	public static void matchNumber(int sum, int n) throws IOException {
-		if( sum == n ) matchNumber(0, n+1);
-		for( int i = 0; i < set.size(); i++ ) {
-			if( visited[i] ) continue;
-			for( int j = 0; j <= i; j++ )
-				visited[j] = true;
-
-			if( sum + set.get(i) <= n ) matchNumber(sum + set.get(i), n);
-			else {
-				bw.write(n);
-				bw.flush();
-				return;
-			}
-
-			for( int j = 0; j <= i; j++ )
-				visited[j] = false;
+	public static void backtrack(int sum, int n) throws IOException {
+		if( sum == n ) {
+			System.out.println(n);
+			backtrack(0, n+1);
+			return;
 		}
-	}
-}
+		else if( sum > n ) {
+			//System.out.println("["+n+", "+sum+"]");
+			return;
+		}
 
-class pComparator implements Comparator<Integer> {
-	@Override
-	public int compare(Integer o1, Integer o2) {
-		// TODO Auto-generated method stub
-		if( o1 > o2 ) return 1;
-		return -1;
+		else {
+			for( int i = 0; i < set.size(); i++ ) {
+				if( visited[i] ) continue;
+				visited[i] = true;
+				backtrack(sum + set.get(i), n);
+				visited[i] = false;	
+			}
+		}
+		//System.exit(0);
 	}
 }
