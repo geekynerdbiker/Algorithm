@@ -36,6 +36,11 @@ public class Main {
 			return;
 		}
 
+		if( N < 3 ) {
+			if( isGoodCombi(arr) ) count++;
+			return;
+		}
+
 		for( int i = index+1; i <= N; i++ ) {
 			if( visited[i] ) continue;
 			for( int j = index+1; j <= i; j++ )
