@@ -29,7 +29,7 @@ public class Main {
 			return;
 		}
 		else if( sum > n ) {
-			//System.out.println("["+n+", "+sum+"]");
+			System.out.println("["+n+"]");
 			return;
 		}
 
