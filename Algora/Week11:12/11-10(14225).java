@@ -7,40 +7,35 @@ public class Main {
 
 	public static int N, answer;
 	public static boolean [] visited;
-	public static ArrayList<Integer> set;
+	public static int [] set;
 	public static void main(String args[]) throws IOException {
 		N = Integer.parseInt(br.readLine());
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		set = new ArrayList<>();
+		set = new int [20+1];
 
 		for( int i = 0; i < N; i++ )
-			set.add(Integer.parseInt(st.nextToken()));
+			set[i] = Integer.parseInt(st.nextToken());
 
-		visited = new boolean [set.size()];
+		visited = new boolean [2000000+1];
 
-		backtrack(0, 1);
+		backtrack(0, 0);
+		
+		for( int i = 0; i < 2000000+1; i++ )
+			if( !visited[i] ) {
+				bw.write(Integer.toString(i));
+				bw.flush();
+				break;
+			}
 	}
 
-	public static void backtrack(int sum, int n) throws IOException {
-		if( sum == n ) {
-			System.out.println(n);
-			backtrack(0, n+1);
+	public static void backtrack(int n, int sum) throws IOException {
+		if( n == N ) {
+			visited[sum] = true;
 			return;
-		}
-		else if( sum > n ) {
-			System.out.println("["+n+"]");
-			return;
-		}
-
-		else {
-			for( int i = 0; i < set.size(); i++ ) {
-				if( visited[i] ) continue;
-				visited[i] = true;
-				backtrack(sum + set.get(i), n);
-				visited[i] = false;	
-			}
-		}
-		//System.exit(0);
+		}	
+		
+		backtrack(n+1, sum+set[n]);
+		backtrack(n+1, sum);
 	}
 }
