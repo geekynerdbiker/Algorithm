@@ -14,15 +14,14 @@ public class Main {
 	for( int i = 0; i < N; i++ )
 		energy.add(Integer.parseInt(st.nextToken()));
 	
-	System.out.println(getEnergy(0,0));
+	System.out.println(getEnergy(1, 0));
 	}
 	
 	public static int getEnergy(int index, int sum) {
-		if( index == 0 || index == energy.size() ) return 0;
+		if( index == 0 || index == energy.size()-1 ) return 0;
 		sum += energy.get(index-1) * energy.get(index+1);
-		energy.remove(index-1);
-		energy.remove(index+1);
+		energy.remove(index);
 		
-		return sum + getEnergy(index+1, sum);
+		return sum + getEnergy(index, sum);
 	}
 }
