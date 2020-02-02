@@ -5,35 +5,55 @@ public class Main {
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static ArrayList<Integer> energy;
+	public static int N, sum = 0;
+	public static int [] energy = new int [10];
+	public static boolean [] visited = new boolean[10];
 	public static void main(String args[]) throws IOException {
-	int N = Integer.parseInt(br.readLine());
-	energy = new ArrayList<Integer>();
+		N = Integer.parseInt(br.readLine());
 
-	StringTokenizer st = new StringTokenizer(br.readLine());
-	for( int i = 0; i < N; i++ )
-		energy.add(Integer.parseInt(st.nextToken()));
-	
-	System.out.println(getEnergy(0));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for( int i = 0; i < N; i++ )
+			energy[i] = Integer.parseInt(st.nextToken());
+
+		getEnergy(0, 0);
+		bw.write(Integer.toString(sum));
+		bw.flush();
 	}
-	
-	public static int getEnergy(int sum) {
-		if( energy.size() == 2 ) return 0;
-		int max = 0, maxIndex = 0;
-		for( int i = 1; i < energy.size()-1; i++ ) {
-			int tmpSum = energy.get(i-1) * energy.get(i+1);
-			max = Math.max(max, tmpSum);
-			if( max == tmpSum ) maxIndex = i;
+
+	public static void getEnergy(int energy, int count){
+		if( count == N - 2 ) {
+			sum = Math.max(sum, energy);
+			return;
 		}
 		
-		//
-		for(int i = 0; i < energy.size(); i++)
-			System.out.print(energy.get(i) + " " );
-		System.out.println();
-		System.out.println(max);
-		//
-		
-		energy.remove(maxIndex);
-		return max + getEnergy(sum);	
+		for( int i = 1; i < N-1; i++ ) {
+			if( !visited[i] ) visited[i] = true;
+			
+			int left = getLeft(i);
+			int right = getRight(i);
+			getEnergy(energy + (left * right), count + 1);
+			
+			visited[i] = false;
+		}
+	}
+	
+	public static int getLeft(int n) {
+		int left = n;
+
+		while( true ) {
+			left--;
+			if( !visited[left] ) break;
+		}
+		return energy[left];
+	}
+
+	public static int getRight(int n) {
+		int right = n;
+
+		while( true ) {
+			right++;
+			if( !visited[right] ) break;
+		}
+		return energy[right];
 	}
 }
