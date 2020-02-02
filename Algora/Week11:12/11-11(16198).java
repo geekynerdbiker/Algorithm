@@ -31,6 +31,7 @@ public class Main {
 			
 			int left = getLeft(i);
 			int right = getRight(i);
+			System.out.println(left * right);
 			getEnergy(energy + (left * right), count + 1);
 			
 			visited[i] = false;
