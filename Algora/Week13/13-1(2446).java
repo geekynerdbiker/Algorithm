@@ -5,33 +5,25 @@ public class Main {
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static int [] height = new int [9];
-
 	public static void main(String args[]) throws IOException {
-		int sum = 0, count = 0;
-		for( int i  = 0; i < 9; i++ ) {
-			height[i] = Integer.parseInt(br.readLine());
-			sum += height[i];
-		}
-
-		end:
-		for( int i = 0; i < 9; i++ ) {
-			if( sum - height[i] <= 100 ) continue;
-				for( int j = i + 1; j < 9; j++ ) {
-					if( sum - height[i] - height[j] != 100 ) continue;
-					height[i] = -1;
-					height[j] = -1;
-					break end;
-				}
-		}
+		int N = Integer.parseInt(br.readLine());
 		
-		Arrays.sort(height);
+		for( int i = 2*N-1; i > 0; i -= 2 ) {
+			for( int j = 0; j < 2*N-1-i; j += 2 )
+				bw.write(" ");
+			for( int k = 0; k < i; k++ )
+					bw.write("*");
+				bw.write("\n");
+			}
 		
-		for( int i = 0; i < 9; i++ )
-			if( height[i] == -1 ) continue;
-			else bw.write(height[i] + "\n");
+		for( int i = 3; i <= 2*N-1; i += 2 ) {
+			for( int j = 0; j < 2*N-1-i; j += 2 )
+				bw.write(" ");
+			for( int k = 0; k < i; k++ )
+				bw.write("*");
+			bw.write("\n");
+		}
 		
 		bw.flush();
 	}
-	
 }
