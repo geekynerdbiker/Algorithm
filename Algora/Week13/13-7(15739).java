@@ -6,29 +6,41 @@ public class Main {
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 	public static void main(String args[]) throws IOException {
-		boolean [][] paper = new boolean [100][100];
 		int N = Integer.parseInt(br.readLine());
+		int [][] magicSquare = new int [N][N];
 
 		for( int i = 0; i < N; i++ ) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
-
-			fillPaper(paper, x, y);
-		}
-		
-		int size = 0;
-		for( int i = 0; i < 100; i++ )
-			for( int j = 0; j < 100; j++ )
-				if( paper[i][j] ) size++;
-
-		bw.write(Integer.toString(size));
+			StringTokenizer st = new StringTokenizer(br.readLine());	
+			for( int j = 0; j < N; j++ )
+				magicSquare[i][j] = Integer.parseInt(st.nextToken());
+		}	
+		int sum = N * (N*N + 1) / 2;
+		if( checkLine(magicSquare, sum) && checkDia(magicSquare, sum) ) bw.write("TRUE");
+		else bw.write("FALSE");
 		bw.flush();
 	}
 
-	public static void fillPaper(boolean [][] set, int x, int y) {
-		for( int i = x; i < x+10; i++ )
-			for( int j = y; j < y+10; j++ )
-				set[i][j] = true;
+	public static boolean checkLine(int [][] arr, int value) {
+		for( int i = 0; i < arr.length; i++ ) {
+			int sumRow = 0, sumCol = 0;
+			for( int j = 0; j < arr.length; j++ ) {
+				sumRow += arr[j][0];
+				sumCol += arr[0][j];
+			}
+			if( sumRow != value || sumCol != value ) return false;
+		}
+		return true;
+	}
+	
+	public static boolean checkDia(int [][] arr, int value) {
+		int sumAsc = 0, sumDesc = 0;
+		for( int i = 0; i < arr.length; i++ ) {
+			int k = arr.length - i - 1;
+			sumAsc += arr[i][i];
+			sumDesc += arr[i][k];
+		}
+		if( sumAsc != value || sumDesc != value) return false;
+		
+		return true;
 	}
 }
