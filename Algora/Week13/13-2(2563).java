@@ -6,35 +6,29 @@ public class Main {
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 	public static void main(String args[]) throws IOException {
+		boolean [][] paper = new boolean [100][100];
 		int N = Integer.parseInt(br.readLine());
-		ArrayList<Square> squares = new ArrayList<Square>();
-		
+
 		for( int i = 0; i < N; i++ ) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			squares.add(new Square(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+
+			fillPaper(paper, x, y);
 		}
-		getSize(squares);
+		
+		int size = 0;
+		for( int i = 0; i < 100; i++ )
+			for( int j = 0; j < 100; j++ )
+				if( paper[i][j] ) size++;
+
+		bw.write(Integer.toString(size));
 		bw.flush();
 	}
-	
-	public static int getSize(ArrayList<Square> arr) {
-		for( int x = 0; x < arr.size(); x++ ) {
-			
-		}
-			
-		return 0;
-	}
-}
 
-class Square {
-	int x1, y1;
-	int x2, y2;
-	
-	Square(int x1, int y1) {
-		this.x1 = x1;
-		this.y1 = y1;
-		
-		this.x2 = x1 + 10;
-		this.y2 = y1 + 10;
+	public static void fillPaper(boolean [][] set, int x, int y) {
+		for( int i = x; i < x+10; i++ )
+			for( int j = y; j < y+10; j++ )
+				set[i][j] = true;
 	}
 }
