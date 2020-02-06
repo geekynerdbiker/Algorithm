@@ -1,16 +1,19 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	private static final Scanner kb = new Scanner(System.in);
+	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static void main(String args[]) {
-		int T = kb.nextInt();
+	public static void main(String args[]) throws IOException{
+		int T = Integer.parseInt(br.readLine());
 
 		for( int i = 0; i < T; i++ ) {
-			int m = kb.nextInt();
-			int n = kb.nextInt();
-			int x = kb.nextInt();
-			int y = kb.nextInt();
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int m = Integer.parseInt(st.nextToken());
+			int n = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
 
 			int gcb = GCB(m, n);
 			int lcm = m * n / gcb;
@@ -27,9 +30,11 @@ public class Main {
 				if (right == y)
 					year = cur; 
 			}
-			System.out.println(year);
+			bw.write(Integer.toString(year) + "\n");
+			bw.flush();
 		}
 	}
+	
 	public static int GCB(int a, int b) {
 		if( a > b ) {
 			if( a % b != 0 )
