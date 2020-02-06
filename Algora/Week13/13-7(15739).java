@@ -8,14 +8,16 @@ public class Main {
 	public static void main(String args[]) throws IOException {
 		int N = Integer.parseInt(br.readLine());
 		int [][] magicSquare = new int [N][N];
+		boolean [] visited = new boolean [N*N+1];
 
 		for( int i = 0; i < N; i++ ) {
 			StringTokenizer st = new StringTokenizer(br.readLine());	
 			for( int j = 0; j < N; j++ )
 				magicSquare[i][j] = Integer.parseInt(st.nextToken());
 		}	
-		int sum = N * (N*N + 1) / 2;
-		if( checkLine(magicSquare, sum) && checkDia(magicSquare, sum) ) bw.write("TRUE");
+		int sum = N * (N * N + 1) / 2;
+		if( checkLine(magicSquare, sum) && checkDia(magicSquare, sum) && checkNumbers(magicSquare, visited) )
+			bw.write("TRUE");
 		else bw.write("FALSE");
 		bw.flush();
 	}
@@ -24,14 +26,14 @@ public class Main {
 		for( int i = 0; i < arr.length; i++ ) {
 			int sumRow = 0, sumCol = 0;
 			for( int j = 0; j < arr.length; j++ ) {
-				sumRow += arr[j][0];
-				sumCol += arr[0][j];
+				sumRow += arr[j][i];
+				sumCol += arr[i][j];
 			}
 			if( sumRow != value || sumCol != value ) return false;
 		}
 		return true;
 	}
-	
+
 	public static boolean checkDia(int [][] arr, int value) {
 		int sumAsc = 0, sumDesc = 0;
 		for( int i = 0; i < arr.length; i++ ) {
@@ -40,7 +42,16 @@ public class Main {
 			sumDesc += arr[i][k];
 		}
 		if( sumAsc != value || sumDesc != value) return false;
-		
+
+		return true;
+	}
+
+	public static boolean checkNumbers(int [][] arr, boolean [] visited) {
+		for( int i = 0; i < arr.length; i++ )
+			for( int j = 0; j < arr.length; j++ ) {
+				if( visited[arr[i][j]] ) return false;
+				visited[arr[i][j]] = true;
+			}
 		return true;
 	}
 }
