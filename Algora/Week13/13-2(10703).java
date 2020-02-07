@@ -16,7 +16,7 @@ public class Main {
 		for( int i = 0; i < S; i++ )
 			depth = Math.max(depth, findDepth(map, 0, i, 0, R));
 
-		System.out.println(depth);z
+		System.out.println(depth);
 		for( int i = 0; i < R; i++ )
 			System.out.println(map[i]);
 	}
