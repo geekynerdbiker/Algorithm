@@ -16,24 +16,26 @@ public class Main {
 			map.add(line);
 		}
 
-		while( findEmptySky(map, R, S) > -1 ) {
-			
-		}
-
+		findEmptySky(map, R, S);
 		for( int i = 0; i < R; i++ )
 			System.out.println(map.get(i));
 	}
 
-	public static int findEmptySky(ArrayList<char []> arr, int R, int S) {
+	public static void findEmptySky(ArrayList<char []> arr, int R, int S) {
+		int line = 0;
 		for( int i = 0; i < R; i++ )
 			for( int j = 0; j < S; j++ ) {
 				if( arr.get(i)[j] != '.') break;
-				if( j == S - 1 && arr.get(i)[j] == '.' ) return i;
+				if( j == S - 1 && arr.get(i)[j] == '.' ) {
+					dropComet(arr, R, S, i);
+					i = ++line;	
+					break;
+				}
 			}
-		return -1;
 	}
 
 	public static void dropComet(ArrayList<char []> arr, int R, int S, int index) {
-
+		arr.add(0, arr.get(index));
+		arr.remove(index+1);
 	}
 }
