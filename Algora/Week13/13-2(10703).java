@@ -17,6 +17,7 @@ public class Main {
 		}
 
 		findEmptySky(map, R, S);
+		
 		for( int i = 0; i < R; i++ )
 			System.out.println(map.get(i));
 	}
