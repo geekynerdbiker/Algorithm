@@ -22,12 +22,18 @@ public class Main {
 
 	public static int howHigh(char [][] arr, int R, int S, int index) {
 		int i = 0;
+		
+		boolean X = false;
 		for( int k = 0; k < R; k++ ) {
 			i++;
-			if( arr[k][index] == 'X' ) i = 0;
+			if( arr[k][index] == 'X' ) {
+				X = true;
+				i = 0;
+			}
+			if( k == R - 1) break;
 			if( arr[k+1][index] == '#' ) break;
 		}
-			
+		if( X == false ) i = 3001;	
 		if( index == S-1 ) return i;
 		return Math.min(i, howHigh(arr, R, S, index+1));
 	}
