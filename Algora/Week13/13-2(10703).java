@@ -8,35 +8,46 @@ public class Main {
 	public static void main(String args[]) throws IOException{
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int R = Integer.parseInt(st.nextToken()), S = Integer.parseInt(st.nextToken());
-		//char [][] map = new char [R][S];
-		ArrayList<char []> map = new ArrayList<char []>();
-
-		for( int i = 0; i < R; i++ ) {
-			char [] line = br.readLine().toCharArray();
-			map.add(line);
-		}
-
-		findEmptySky(map, R, S);
+		char [][] map = new char [R][S];
 		
+
 		for( int i = 0; i < R; i++ )
-			System.out.println(map.get(i));
+			map[i] = br.readLine().toCharArray();
+
+		dropComet(map, R, S, howHigh(map, R, S, 0));
+
+		for( int i = 0; i < R; i++ )
+			System.out.println(map[i]);
 	}
 
-	public static void findEmptySky(ArrayList<char []> arr, int R, int S) {
-		int line = 0;
-		for( int i = 0; i < R; i++ )
-			for( int j = 0; j < S; j++ ) {
-				if( arr.get(i)[j] != '.') break;
-				if( j == S - 1 && arr.get(i)[j] == '.' ) {
-					dropComet(arr, R, S, i);
-					i = ++line;	
-					break;
-				}
+	public static int howHigh(char [][] arr, int R, int S, int index) {
+		int i = 0;
+		for( int k = 0; k < R; k++ ) {
+			i++;
+			if( arr[k][index] == 'X' ) i = 0;
+			if( arr[k+1][index] == '#' ) break;
+		}
+			
+		if( index == S-1 ) return i;
+		return Math.min(i, howHigh(arr, R, S, index+1));
+	}
+	
+	public static void dropComet(char [][] arr, int R, int S, int depth) {
+		int startPoint, endPoint;
+		for( int i = 0; i < S; i++ ) {
+			startPoint = 3000; endPoint = 0;
+			
+			for( int j = 0; j < R; j++ ) { 
+				if( arr[j][i] == 'X' && arr[j+1][i] == '.' )
+					endPoint = j+1;
+				if( arr[j][i] == 'X' ) startPoint = Math.min(j, startPoint);
 			}
-	}
-
-	public static void dropComet(ArrayList<char []> arr, int R, int S, int index) {
-		arr.add(0, arr.get(index));
-		arr.remove(index+1);
+			
+			int tmpDepth = depth;
+			for( int j = endPoint; tmpDepth > 0; tmpDepth--, j++ )
+				arr[j][i] = 'X';
+			for( int j = startPoint; j < depth; j++ )
+				arr[j][i] = '.';
+		}
 	}
 }
