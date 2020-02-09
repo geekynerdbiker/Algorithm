@@ -35,19 +35,19 @@ public class Main {
 	public static void dropComet(char [][] arr, int R, int S, int depth) {
 		int startPoint, endPoint;
 		for( int i = 0; i < S; i++ ) {
-			startPoint = 3000; endPoint = 0;
+			startPoint = 3001; endPoint = 0;
 			
 			for( int j = 0; j < R; j++ ) { 
 				if( arr[j][i] == 'X' && arr[j+1][i] == '.' )
 					endPoint = j+1;
 				if( arr[j][i] == 'X' ) startPoint = Math.min(j, startPoint);
+				
 			}
-			
-			int tmpDepth = depth;
-			for( int j = endPoint; tmpDepth > 0; tmpDepth--, j++ )
+			for( int j = endPoint; j < endPoint + depth; j++ )
 				arr[j][i] = 'X';
-			for( int j = startPoint; j < depth; j++ )
-				arr[j][i] = '.';
+			if( startPoint == 3001 ) startPoint = 0;
+			for( int j = startPoint; j < startPoint + depth; j++ )
+					arr[j][i] = '.';
 		}
 	}
 }
