@@ -32,7 +32,8 @@ public class Main {
 					for( int j = startIndex; j <= endIndex; j++ )
 						sb.append(var[j]);
 					
-					sb.append('_');
+					if( endIndex != -1 )
+						sb.append('_');
 					startIndex = i;
 				}
 			}
@@ -57,6 +58,10 @@ public class Main {
 			for( int i = startIndex; i < var.length; i++ )
 				sb.append(var[i]);
 		}
+		
+		else 
+			for( int i = 0; i < var.length; i++ )
+				sb.append(var[i]);
 		
 		bw.write(sb.toString());
 		bw.flush();
