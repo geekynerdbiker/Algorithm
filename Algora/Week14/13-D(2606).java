@@ -2,23 +2,25 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-	private static final Scanner kb = new Scanner(System.in);
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static ArrayList<Integer> [] ar;
+	public static ArrayList<Integer> [] al;
 	public static void main(String args[]) throws IOException {
-		int N = kb.nextInt(), L = kb.nextInt(), answer = 0;
+		int N = Integer.parseInt(br.readLine()), L = Integer.parseInt(br.readLine());
+		int answer = 0;
 
-		ar = new ArrayList[N+1];
+		al = new ArrayList[N+1];
 		boolean [] visit = new boolean [N+1];
 
 		for( int i = 0; i < N+1; i++) 
-			ar[i] = new ArrayList<>();
+			al[i] = new ArrayList<>();
 
 		for( int i = 0; i < L; i++) {
-			int u = kb.nextInt(), v = kb.nextInt();
-			ar[u].add(v);
-			ar[v].add(u);
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int u = Integer.parseInt(st.nextToken()), v = Integer.parseInt(st.nextToken());
+			al[u].add(v);
+			al[v].add(u);
 		}
 
 		dfs(1, visit);
@@ -26,13 +28,14 @@ public class Main {
 		for(boolean f : visit){
 			if(f == true) answer++;
 		}
-		System.out.println(answer-1);
+		bw.write(Integer.toString(answer-1));
+		bw.flush();
 	}
 
 	public static void dfs(int u, boolean [] visit) {
 		visit[u] = true;
 
-		for(int v : ar[u]){
+		for(int v : al[u]){
 			if(visit[v] == false) dfs(v, visit);
 		}
 	}
