@@ -22,7 +22,7 @@ public class Main {
 			}
 		}
 		
-		for( int depth = 1; depth <= max; depth++ ) {
+		for( int depth = 0; depth <= max; depth++ ) {
 			int count = 0;
 			
 			status = new int[N][N];
