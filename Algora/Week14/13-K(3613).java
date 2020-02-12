@@ -1,12 +1,14 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main {
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 	public static void main(String args[]) throws IOException {
-		char [] var = br.readLine().toCharArray();
+		String s = br.readLine();
+		char [] var = s.toCharArray();
 		boolean javaFlag = false, cppFlag = false;
 
 		for( int i = 0; i < var.length; i++ ) {
@@ -15,10 +17,10 @@ public class Main {
 		}
 
 
-		if( !isValid(var, javaFlag, cppFlag) ) {
+		if( !isValid(s, javaFlag, cppFlag) ) {
 			bw.write("Error!\n");
 			bw.flush();
-			//return;
+			return;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -68,15 +70,16 @@ public class Main {
 		bw.flush();
 	}
 
-	public static boolean isValid(char [] var, boolean flag1, boolean flag2) {
-		for( int i = 0; i < var.length; i++ ) {
-			if( var[i] < 48 ) return false;	
-			else if( var[i] >= 58 && var[i] < 65 ) return false;
-			else if( var[i] >= 91 && var[i] < 95 ) return false;
-			else if( var[i] == 96) return false;
-			else if( var[i] >= 123 ) return false;
-		}
-
+	public static boolean isValid(String s, boolean flag1, boolean flag2) {
+		String p = "^[0-9a-zA-Z_]*$";
+		char [] c = s.toCharArray();
+		
+		if( !Pattern.matches(p, s) ) return false;
+		if( c[0] == '_' || c[c.length-1] == '_' ) return false;
+		for( int i = 0; i < c.length-1; i++ )
+			if( c[i] == '_' && c[i+1] == '_') return false;
+		
+		if( c[0] >= 65 && c[0] < 91 ) return false;
 		if( flag1 && flag2 ) return false;
 		return true;
 
