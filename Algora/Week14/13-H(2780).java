@@ -17,7 +17,7 @@ public class Main {
 			LHS = nextNum(LHS);
 			round++;
 		}
-		
+		z
 		bw.write(Integer.toString(round));
 		bw.flush();
 	}
