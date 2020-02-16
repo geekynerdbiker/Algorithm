@@ -15,7 +15,7 @@ public class Main {
 		while ( KJM != LHS ) {
 			KJM = nextNum(KJM);
 			LHS = nextNum(LHS);
-			round++;a
+			round++;
 		}
 		
 		bw.write(Integer.toString(round));
