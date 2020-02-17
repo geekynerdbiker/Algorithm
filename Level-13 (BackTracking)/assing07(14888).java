@@ -11,7 +11,7 @@ public class Main {
 	public static int min = Integer.MAX_VALUE;
 	
 	public static void main(String args[]) throws IOException {
-		N = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(br.readLine());s
 		numbers = new int [N];
 
 		int [] cal = new int [4];
