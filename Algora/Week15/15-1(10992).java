@@ -2,30 +2,21 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-	public static void main(String args[]) throws IOException{
-		int N = Integer.parseInt(br.readLine());
-
-		for( int i = 0; i < N; i++ ) {
-			if( i == N - 1 )
-				for( int j = 0; j < 2*N-1; j++ )
-					bw.write("*");
-					
-			else {
-				for( int j = N-1; j > i; j-- )
-					bw.write(" ");
-				bw.write("*");
-				
-				if( i != 0) {
-					for( int k = 0; k < 2*i-1; k++ )
-						bw.write(" ");
-					bw.write("*");
-				}
-			}
-			bw.write("\n");
-			bw.flush();
-		}
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	public static void main(String[] args) throws IOException{
+		int score = Integer.parseInt(br.readLine());
+		
+		if ( score >= 90 )
+			bw.write("A\n");
+		else if ( score >= 80 )
+			bw.write("B\n");
+		else if ( score >= 70 )
+			bw.write("C\n");
+		else if ( score >= 60 )
+			bw.write("D\n");
+		else
+			bw.write("F\n");
+		bw.flush();
 	}
 }
