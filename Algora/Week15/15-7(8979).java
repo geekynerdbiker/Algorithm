@@ -40,12 +40,12 @@ public class Main {
 
 			if( arr.get(i).gold == arr.get(i+1).gold )
 				if( arr.get(i).silver == arr.get(i+1).silver )
-					if( arr.get(i).bronze == arr.get(i+1).bronze ) {
+					if( arr.get(i).bronze == arr.get(i+1).bronze )
 						arr.get(i+1).getPlace(arr.get(i).place);
-					}
 			place++;
 		}
-						
+		if( arr.get(arr.size()-1).place == 0 )
+			arr.get(arr.size()-1).getPlace(place);
 	}
 }
 
