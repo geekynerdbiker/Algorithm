@@ -5,18 +5,16 @@ public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException{
-		int score = Integer.parseInt(br.readLine());
-		
-		if ( score >= 90 )
-			bw.write("A\n");
-		else if ( score >= 80 )
-			bw.write("B\n");
-		else if ( score >= 70 )
-			bw.write("C\n");
-		else if ( score >= 60 )
-			bw.write("D\n");
-		else
-			bw.write("F\n");
+		int n;
+		boolean [] student = new boolean [31];
+
+		for( int i = 0; i < 28; i++ ) {
+			n = Integer.parseInt(br.readLine());
+			student[n] = true;
+		}
+
+		for( int i = 1; i <= 30; i++ )
+			if(	!student[i] ) bw.write(Integer.toString(i) + "\n");
 		bw.flush();
 	}
 }
