@@ -5,32 +5,52 @@ public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException{
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int R = Integer.parseInt(st.nextToken()), C = Integer.parseInt(st.nextToken());
-		char [][] card = new char [2*R][2*C];
-		
-		for( int i = 0; i < R; i++ ) {
-			char [] pattern = br.readLine().toCharArray();
-			for( int j = 0; j < C; j++ ) {
-				card[i][j] = pattern[j];
-				card[2*R-i-1][j] = pattern[j];
-				card[i][2*C-j-1] = pattern[j];
-				card[2*R-i-1][2*C-j-1] = pattern[j];
-			}
+		int N = Integer.parseInt(br.readLine());
+		ArrayList<Student> students = new ArrayList<Student>();
+
+		for( int i = 0; i < N; i++ ) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			String name = st.nextToken();
+			int day = Integer.parseInt(st.nextToken());
+			int month = Integer.parseInt(st.nextToken());
+			int year = Integer.parseInt(st.nextToken());
+
+			students.add(new Student(name, day, month, year));
 		}
 		
-		st = new StringTokenizer(br.readLine());
-		int x = Integer.parseInt(st.nextToken());
-		int y = Integer.parseInt(st.nextToken());
-		
-		if( card[x-1][y-1] == '.' ) card[x-1][y-1] = '#';
-		else if( card[x-1][y-1] == '#' ) card[x-1][y-1] = '.';
-		
-		for( int i = 0; i < 2*R; i++ ) {
-			for( int j = 0; j < 2*C; j++ )
-				bw.write(Character.toString(card[i][j]));
-			bw.write("\n");
-		}
+		students.sort(new birthComparator());
+
+		bw.write(students.get(0).name + "\n" + students.get(students.size()-1).name);
 		bw.flush();
+	}
+}
+
+class Student {
+	String name;
+	int day;
+	int month;
+	int year;
+
+	public Student(String name, int day, int month, int year) {
+		this.name = name;
+		this.day = day;
+		this.month = month;
+		this.year = year;
+	}
+}
+
+class birthComparator implements Comparator<Student> {
+	@Override
+	public int compare(Student s1, Student s2) {
+		if( s1.year < s2.year ) return 1;
+		else if( s1.year == s2.year ) {
+			if( s1.month < s2.month ) return 1;
+			else if( s1.month == s2.month ) {
+				if( s1.day < s2.day ) return 1;
+				else return -1;
+			}
+			else return -1;
+		}
+		else return -1;
 	}
 }
