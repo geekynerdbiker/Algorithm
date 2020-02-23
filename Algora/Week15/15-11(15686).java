@@ -4,49 +4,61 @@ import java.util.*;
 public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-	public static int size;
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException{
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int R = Integer.parseInt(st.nextToken()), C = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken()), M = Integer.parseInt(st.nextToken());
 
-		int [][] picture = new int [R][C];
-		boolean [][] visited = new boolean [R][C];
-
-		for( int i = 0; i < R; i++ ) {
+		int [][] map = new int [N][N];
+		int [][] len = new int [13][100];
+		
+		ArrayList<Pair> house = new ArrayList<Pair>();
+		ArrayList<Pair> chicken = new ArrayList<Pair>();
+		ArrayList<Integer> length = new ArrayList<Integer>();
+		
+		for( int i = 0; i < N; i++ ) {
 			st = new StringTokenizer(br.readLine());
-			for( int j = 0; j < C; j++ ) 
-				picture[i][j] = Integer.parseInt(st.nextToken());
+			for( int j = 0; j < N; j++ ) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+				if( map[i][j] == 1 ) house.add(new Pair(i,j));
+				if( map[i][j] == 2 ) chicken.add(new Pair(i, j));
+			}
 		}
 
-		int count = 0, result = 0;
-		for( int i = 0; i < R; i++ )
-			for( int j = 0; j < C; j++ )
-				if( !visited[i][j] && picture[i][j] != 0 ) {
-					size = 0;
-					countMine(picture, visited, i, j);
-					result = Math.max(result, size);
-					count++;
-				}
-        
-		bw.write(Integer.toString(count) + "\n");
-		bw.write(Integer.toString(result));
-		bw.flush();
+		getLength(len, chicken, house);
+		for( int i = 0; i < chicken.size(); i++ ) {
+			for( int j = 0; j < house.size(); j++)			
+				System.out.print(len[i][j] + " ");
+			System.out.println();
+		}
+
+
+	}
+	
+	public static void removeFarChicken(int [][] arr, ArrayList<Integer> l, int M) {
+		
 	}
 
-	public static void countMine(int [][] arr, boolean [][] visited, int x, int y) {
-		int [][] dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
-
-		size++;
-		visited[x][y] = true;
-
-		for( int i = 0; i < 4; i++ ) {
-			int nextX = x + dir[i][0];
-			int nextY = y + dir[i][1];
-
-			if( nextX >= 0 && nextX < arr.length && nextY >= 0 && nextY < arr[0].length )
-				if( !visited[nextX][nextY] && arr[nextX][nextY] != 0 )
-					countMine(arr, visited, nextX, nextY);	
+	public static void getLength(int [][] arr, ArrayList<Pair> c, ArrayList<Pair> h, ArrayList<Integer> l) {
+		for( int i = 0; i < c.size(); i++ ) {
+			int sum = 0;
+			for( int j = 0; j < h.size(); j++ ) {
+				arr[i][j] = calculate(c.get(i), h.get(j));
+				sum += arr[i][j];
+			}
+			l.add(sum);
 		}
+	}
+
+	public static int calculate(Pair p1, Pair p2) {
+		return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+	}
+}
+
+class Pair {
+	int x, y;
+
+	public Pair(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 }
