@@ -10,11 +10,10 @@ public class Main {
 
 		int [][] map = new int [N][N];
 		int [][] len = new int [13][100];
-		
+
 		ArrayList<Pair> house = new ArrayList<Pair>();
 		ArrayList<Pair> chicken = new ArrayList<Pair>();
-		ArrayList<Integer> length = new ArrayList<Integer>();
-		
+
 		for( int i = 0; i < N; i++ ) {
 			st = new StringTokenizer(br.readLine());
 			for( int j = 0; j < N; j++ ) {
@@ -25,6 +24,9 @@ public class Main {
 		}
 
 		getLength(len, chicken, house);
+		
+		boolean [] visited = new boolean[chicken.size()];
+		
 		for( int i = 0; i < chicken.size(); i++ ) {
 			for( int j = 0; j < house.size(); j++)			
 				System.out.print(len[i][j] + " ");
@@ -34,19 +36,14 @@ public class Main {
 
 	}
 	
-	public static void removeFarChicken(int [][] arr, ArrayList<Integer> l, int M) {
+	public static void findMinimum() {
 		
 	}
 
-	public static void getLength(int [][] arr, ArrayList<Pair> c, ArrayList<Pair> h, ArrayList<Integer> l) {
-		for( int i = 0; i < c.size(); i++ ) {
-			int sum = 0;
-			for( int j = 0; j < h.size(); j++ ) {
+	public static void getLength(int [][] arr, ArrayList<Pair> c, ArrayList<Pair> h) {
+		for( int i = 0; i < c.size(); i++ )
+			for( int j = 0; j < h.size(); j++ )
 				arr[i][j] = calculate(c.get(i), h.get(j));
-				sum += arr[i][j];
-			}
-			l.add(sum);
-		}
 	}
 
 	public static int calculate(Pair p1, Pair p2) {
