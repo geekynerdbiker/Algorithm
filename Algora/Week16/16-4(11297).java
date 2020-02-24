@@ -5,24 +5,28 @@ public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException{
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int R = Integer.parseInt(st.nextToken()) - 1, C = Integer.parseInt(st.nextToken()) - 1;
-	
-		char [][] farm = new char [N][N];
-		
-	
-			for( int i = 0; i < N; i++ )
-				for( int j = 0; j < N; j++ )
-					if( (R+C) % 2 == (i+j) % 2 ) farm[i][j] = 'v';
-					else farm[i][j] = '.';
-	
-		
-		for( int i = 0; i < N; i++ ) {
-			for( int j = 0; j < N; j++ )
-				bw.write(farm[i][j]);
+		while( true ) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+
+			long dd = Integer.parseInt(st.nextToken());
+			long mm = Integer.parseInt(st.nextToken());
+			long yy = Integer.parseInt(st.nextToken());
+			
+			if( dd == 0 && mm == 0 && yy == 0 ) return;
+			char [] message = br.readLine().toCharArray();
+			
+			long key = (dd%25 + mm%25 + yy%25) % 25 + 1;
+
+			for( int i = 0; i < message.length; i++ ) {
+				if( message[i] >= 'a' && message[i] <= 'z') {
+					if( message[i] - key >= 'a' ) message[i] -= key;
+					else message[i] += 26-key;
+				}
+				bw.write(message[i]);
+			}
+			
 			bw.write("\n");
+			bw.flush();
 		}
-		bw.flush();
 	}
 }
