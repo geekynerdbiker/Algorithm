@@ -6,18 +6,24 @@ public class Main {
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException {
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int start = Integer.parseInt(st.nextToken()), end = Integer.parseInt(st.nextToken());
-		int [] arr = new int [1001];
-		
-		for( int i = 1, index = 0; index <= end; i++ )
-			for( int j = 1; j <= i && index <= end; j++ )
-				arr[index++] = i;
-		
-		int sum = 0;
-		for( int i = start - 1; i <= end - 1; i++ )
-			sum += arr[i];
-		
-		bw.write(Integer.toString(sum));
+		int N = Integer.parseInt(st.nextToken());
+		long score = Integer.parseInt(st.nextToken());
+		int P = Integer.parseInt(st.nextToken());
+
+		List<Long> board = new ArrayList<Long>();
+
+		st = new StringTokenizer(br.readLine());
+		for( int i = 1; i < N; i++ ) {
+			board.add(Long.parseLong(st.nextToken()));
+
+			if( board.get(i-1) <= score ) {
+				bw.write(Integer.toString(i));
+				bw.flush();
+				return;
+			}
+		}
+
+		bw.write("-1");
 		bw.flush();
 	}
 }
