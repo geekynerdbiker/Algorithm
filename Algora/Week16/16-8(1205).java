@@ -10,20 +10,26 @@ public class Main {
 		long score = Integer.parseInt(st.nextToken());
 		int P = Integer.parseInt(st.nextToken());
 
-		List<Long> board = new ArrayList<Long>();
-
-		st = new StringTokenizer(br.readLine());
-		for( int i = 1; i < N; i++ ) {
-			board.add(Long.parseLong(st.nextToken()));
-
-			if( board.get(i-1) <= score ) {
-				bw.write(Integer.toString(i));
-				bw.flush();
-				return;
-			}
+		if( N == 0 ) {
+			bw.write("1");
+			bw.flush();
+			return;
 		}
+		long [] board = new long [N];
 
-		bw.write("-1");
+		int rank = 1;
+		int p = 1;
+		
+		st = new StringTokenizer(br.readLine());
+		for( int i = 0; i < N; i++ ) { 
+			board[i] = Long.parseLong(st.nextToken());
+			if( board[i] > score ) rank++;
+			if( board[i] >= score ) p++;
+		}
+		
+		if( rank > P || p > P ) bw.write("-1");
+		else bw.write(Integer.toString(rank));
+		
 		bw.flush();
 	}
 }
