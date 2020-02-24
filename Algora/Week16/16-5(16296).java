@@ -4,29 +4,30 @@ import java.util.*;
 public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-	public static void main(String[] args) throws IOException{
-		while( true ) {
+	public static void main(String[] args) throws IOException {
+		int N = Integer.parseInt(br.readLine());
+		boolean [] line = new boolean [10000];
+		
+		int minStart = 0;
+		int maxEnd = 0;
+		while( N-- > 0 ) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-
-			long dd = Integer.parseInt(st.nextToken());
-			long mm = Integer.parseInt(st.nextToken());
-			long yy = Integer.parseInt(st.nextToken());
+			int start = Integer.parseInt(st.nextToken()) - 1;
+			int end = Integer.parseInt(st.nextToken()) - 1;
 			
-			if( dd == 0 && mm == 0 && yy == 0 ) return;
-			char [] message = br.readLine().toCharArray();
+			minStart = Math.min(minStart, start);
+			maxEnd = Math.max(maxEnd, end);
 			
-			long key = (dd%25 + mm%25 + yy%25) % 25 + 1;
-
-			for( int i = 0; i < message.length; i++ ) {
-				if( message[i] >= 'a' && message[i] <= 'z') {
-					if( message[i] - key >= 'a' ) message[i] -= key;
-					else message[i] += 26-key;
-				}
-				bw.write(message[i]);
-			}
-			
-			bw.write("\n");
-			bw.flush();
+			for( int i = start; i < end; i++ )
+				line[i] = true;
 		}
+		
+		int length = 0;
+		for( int i = minStart; i <= maxEnd; i++ )
+			if( line[i] ) length++;
+		
+		
+		bw.write(Integer.toString(length));
+		bw.flush();
 	}
 }
