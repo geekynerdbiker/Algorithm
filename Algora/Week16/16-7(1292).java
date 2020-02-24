@@ -20,4 +20,4 @@ public class Main {
 		bw.write(Integer.toString(sum));
 		bw.flush();
 	}
-}asdas
+}
