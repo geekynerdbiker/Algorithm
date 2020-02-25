@@ -18,24 +18,69 @@ public class Main {
 
 		for( int i = 0; i < 5; i++ )
 			System.out.println(hand[i].color + " " + hand[i].number);
-		int score = checkHand(hand);
+		bw.write(Integer.toString(checkHand(hand)));
+		bw.flush();
 
 	}
 
 	public static int checkHand(Card [] hand) {
 		int score = 0;
+		int flag = 0;
 		int pair = isPairs(hand);
 
-		if( isFlush(hand) && isStraight(hand) ) score += 900 + hand[4].number;
-		if( isFourCard(hand) ) score += 800 + hand[4].number;
-		if( isTriple(hand) && pair == 1 ) score = 700 + getTriple(hand) * 10 + getSmallPair(hand, getTriple(hand));
-		if( isFlush(hand) ) score += 600 + hand[4].number;
-		if( isStraight(hand) ) score += 500 + hand[4].number;
-		if( isTriple(hand) ) score += 400 + getTriple(hand);
-		if( pair == 2 ) score += 300 + getBigPair(hand) * 10 + getSmallPair(hand);
-		if( pair == 1 ) score += 200 + ;
-		if( true ) score += 100 + hand[4].number; 
 
+		if( isFlush(hand) && isStraight(hand) ) {
+			score += 900 + hand[4].number;
+			flag++;
+			System.out.println(score);
+		}
+
+		if( isFourCard(hand) ) {
+			score += 800 + hand[4].number;
+			flag++;
+			System.out.println(score);
+		}
+
+		if( isTriple(hand) && pair == 1 ) {
+			score = 700 + getTriple(hand) * 10 + getSmallPair(hand, getTriple(hand));
+			flag++;
+			System.out.println(score);
+		}
+
+		if( isFlush(hand) ) {
+			score += 600 + hand[4].number;
+			flag++;
+			System.out.println(score);
+		}
+
+		if( isStraight(hand) ) {
+			score += 500 + hand[4].number;
+			flag++;
+			System.out.println(score);
+		}
+
+		if( isTriple(hand) ) {
+			score += 400 + getTriple(hand);
+			flag++;
+			System.out.println(score);
+		}
+
+		if( pair == 2 ) {
+			score += 300 + getBigPair(hand) * 10 + getSmallPair(hand);
+			flag++;
+			System.out.println(score);
+		}
+
+		if( pair == 1 ) {
+			score += 200 + getSmallPair(hand);
+			flag++;
+			System.out.println(score);
+		}
+		if( flag == 0 ) {
+			score += 100 + hand[4].number;
+			System.out.println(score);
+
+		}
 		return score;
 	}
 
@@ -97,14 +142,14 @@ public class Main {
 				return hand[i].number;
 		return 0;
 	}
-	
+
 	public static int getSmallPair(Card [] hand) {
 		for( int i = 0; i < 4; i++ )
 			if( hand[i].number == hand[i+1].number )
 				return hand[i].number;
 		return 0;
 	}
-	
+
 	public static int getSmallPair(Card [] hand, int k) {
 		for( int i = 0; i < 4; i++ ) {
 			if( hand[i].number == k ) continue;
