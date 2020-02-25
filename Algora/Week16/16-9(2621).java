@@ -6,36 +6,119 @@ public class Main {
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException {
 		Card [] hand = new Card [5];
-		
+
 		for( int i = 0; i < 5; i++ ) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			char [] color = st.nextToken().toCharArray();
 			int number = Integer.parseInt(st.nextToken());
 			hand[i] = new Card(color[0], number);
 		}
-		
+
 		Arrays.sort(hand, new cardComparator());
-		
+
 		for( int i = 0; i < 5; i++ )
 			System.out.println(hand[i].color + " " + hand[i].number);
 		int score = checkHand(hand);
-		
+
 	}
-	
+
 	public static int checkHand(Card [] hand) {
 		int score = 0;
-		int rules = 0;
-		
-		
-		
+		int pair = isPairs(hand);
+
+		if( isFlush(hand) && isStraight(hand) ) score += 900 + hand[4].number;
+		if( isFourCard(hand) ) score += 800 + hand[4].number;
+		if( isTriple(hand) && pair == 1 ) score = 700 + getTriple(hand) * 10 + getSmallPair(hand, getTriple(hand));
+		if( isFlush(hand) ) score += 600 + hand[4].number;
+		if( isStraight(hand) ) score += 500 + hand[4].number;
+		if( isTriple(hand) ) score += 400 + getTriple(hand);
+		if( pair == 2 ) score += 300 + getBigPair(hand) * 10 + getSmallPair(hand);
+		if( pair == 1 ) score += 200 + ;
+		if( true ) score += 100 + hand[4].number; 
+
 		return score;
+	}
+
+	public static boolean isFlush(Card [] hand) {
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].color != hand[i+1].color )
+				return false;
+		return true;
+	}
+
+	public static boolean isStraight(Card [] hand) {
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].number != hand[i+1].number - 1 )
+				return false;
+		return true;
+	}
+
+	public static boolean isFourCard(Card [] hand) {
+		int count = 0;
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].number == hand[i+1].number ) count++;
+
+		if( count == 3 ) return true;
+		return false;
+	}
+
+	public static boolean isTriple(Card [] hand) {
+		int count = 0;
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].number == hand[i+1].number ) count++;
+
+		if( count == 2 ) return true;
+		return false;
+	}
+
+	public static int getTriple(Card [] hand) {
+		int count = 0;
+		for( int i = 0; i < 4; i++ ) {
+			if( hand[i].number == hand[i+1].number ) count++;
+			if( count == 2 ) return hand[i].number; 
+		}
+		return 0;
+	}
+
+	public static int isPairs(Card [] hand) {
+		int pair = 0;
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].number == hand[i+1].number ) {
+				pair++;
+				i++;
+			}
+
+		return pair;
+	}
+
+	public static int getBigPair(Card [] hand) {
+		for( int i = 3; i >= 0; i-- )
+			if( hand[i].number == hand[i+1].number )
+				return hand[i].number;
+		return 0;
+	}
+	
+	public static int getSmallPair(Card [] hand) {
+		for( int i = 0; i < 4; i++ )
+			if( hand[i].number == hand[i+1].number )
+				return hand[i].number;
+		return 0;
+	}
+	
+	public static int getSmallPair(Card [] hand, int k) {
+		for( int i = 0; i < 4; i++ ) {
+			if( hand[i].number == k ) continue;
+			if( hand[i].number == hand[i+1].number )
+				return hand[i].number;
+		}
+		return 0;
 	}
 }
 
 class Card {
 	char color;
 	int number;
-	
+
 	public Card(char c, int n) {
 		this.color = c;
 		this.number = n;
