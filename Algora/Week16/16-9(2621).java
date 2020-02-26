@@ -5,25 +5,26 @@ public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static void main(String[] args) throws IOException {
-		Card [] hand = new Card [5];
+		int [] color = new int [4];
+		int [] number = new int [10];
 
 		for( int i = 0; i < 5; i++ ) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			char [] color = st.nextToken().toCharArray();
-			int number = Integer.parseInt(st.nextToken());
-			hand[i] = new Card(color[0], number);
+			String s = st.nextToken();
+			
+			if( s.equals("B") ) color[0]++;
+			else if( s.equals("G") ) color[1]++;
+			else if( s.equals("R") ) color[2]++;
+			else if( s.equals("Y") ) color[3]++;
+			
+			number[Integer.parseInt(st.nextToken())]++;
 		}
-
-		Arrays.sort(hand, new cardComparator());
-
-		for( int i = 0; i < 5; i++ )
-			System.out.println(hand[i].color + " " + hand[i].number);
 
 		bw.write(Integer.toString(checkHand(hand)));
 		bw.flush();
 	}
 
-	public static int checkHand(Card [] hand) {
+	public static int checkHand(int [] color, int [] number) {
 		int score = 0;
 		int pair = isPairs(hand);
 
@@ -49,30 +50,30 @@ public class Main {
 		return 0;
 	}
 
-	public static boolean isFlush(Card [] hand) {
+	public static boolean isFlush(int [] color, int [] number) {
 		for( int i = 0; i < 4; i++ )
-			if( hand[i].color != hand[i+1].color )
-				return false;
-		return true;
+			if( color[i] == 4 )
+				return true;
+		return false;
 	}
 
-	public static boolean isStraight(Card [] hand) {
+	public static boolean isStraight(int [] color, int [] number) {
 		for( int i = 0; i < 4; i++ )
 			if( hand[i].number != hand[i+1].number - 1 )
 				return false;
 		return true;
 	}
 
-	public static boolean isFourCard(Card [] hand) {
+	public static boolean isFourCard(int [] color, int [] number) {
 		int count = 0;
-		for( int i = 0; i < 4; i++ )
+		for( int i = 0; i < 4; i++ )	
 			if( hand[i].number == hand[i+1].number ) count++;
 
 		if( count == 3 ) return true;
 		return false;
 	}
 
-	public static int getFourCard(Card [] hand) {
+	public static int getFourCard(int [] color, int [] number) {
 		int count = 0;
 		for( int i = 0; i < 4; i++ ) {
 			if( hand[i].number == hand[i+1].number ) count++;
@@ -81,7 +82,7 @@ public class Main {
 		return 0;
 	}
 
-	public static boolean isTriple(Card [] hand) {
+	public static boolean isTriple(int [] color, int [] number) {
 		int count = 0;
 		for( int i = 0; i < 4; i++ )
 			if( hand[i].number == hand[i+1].number ) count++;
@@ -90,7 +91,7 @@ public class Main {
 		return false;
 	}
 
-	public static int getTriple(Card [] hand) {
+	public static int getTriple(int [] color, int [] number) {
 		int count = 0;
 		for( int i = 0; i < 4; i++ ) {
 			if( hand[i].number == hand[i+1].number ) count++;
@@ -99,7 +100,7 @@ public class Main {
 		return 0;
 	}
 
-	public static int isPairs(Card [] hand) {
+	public static int isPairs(int [] color, int [] number) {
 		int pair = 0;
 		for( int i = 0; i < 4; i++ )
 			if( hand[i].number == hand[i+1].number ) {
@@ -110,44 +111,26 @@ public class Main {
 		return pair;
 	}
 
-	public static int getBigPair(Card [] hand) {
+	public static int getBigPair(int [] color, int [] number) {
 		for( int i = 3; i >= 0; i-- )
 			if( hand[i].number == hand[i+1].number )
 				return hand[i].number;
 		return 0;
 	}
 
-	public static int getSmallPair(Card [] hand) {
+	public static int getSmallPair(int [] color, int [] number) {
 		for( int i = 0; i < 4; i++ )
 			if( hand[i].number == hand[i+1].number )
 				return hand[i].number;
 		return 0;
 	}
 
-	public static int getSmallPair(Card [] hand, int k) {
+	public static int getSmallPair(int [] color, int [] number, int k) {
 		for( int i = 0; i < 4; i++ ) {
 			if( hand[i].number == k ) continue;
 			if( hand[i].number == hand[i+1].number )
 				return hand[i].number;
 		}
 		return 0;
-	}
-}
-
-class Card {
-	char color;
-	int number;
-
-	public Card(char c, int n) {
-		this.color = c;
-		this.number = n;
-	}
-}
-
-class cardComparator implements Comparator<Card> {
-	@Override
-	public int compare(Card c1, Card c2) {
-		if( c1.number > c2.number ) return 1;
-		return -1;
 	}
 }
