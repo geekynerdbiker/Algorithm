@@ -25,7 +25,6 @@ public class Main {
 	}
 
 	public static int checkHand(int [] color, int [] number) {
-		int score = 0;
 		int pair = isPairs(number);
 
 		if( isFlush(color) && isStraight(number) )
@@ -47,12 +46,12 @@ public class Main {
 		if( true )
 			return 100 + getBiggest(number); 
 
-		return 0;
+		return -1;
 	}
 
 	public static boolean isFlush(int [] color) {
 		for( int i = 0; i < 4; i++ )
-			if( color[i] == 4 )
+			if( color[i] == 5 )
 				return true;
 		return false;
 	}
@@ -65,10 +64,9 @@ public class Main {
 				break;
 			}
 		
-		for( int i = start; i < number.length; i++ )
+		for( int i = start; i < number.length - 1; i++ )
 			if( number[i] == 1 &&  number[i+1] == 1 ) count++;
-		
-		if( count == 3 ) return true;
+		if( count == 4 ) return true;
 		return false;
 	}
 
