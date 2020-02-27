@@ -11,7 +11,7 @@ public class Main {
 		
 		int [] plum = new int [T];
 		
-		for( int i = 0; i < N; i++ )
+		for( int i = 0; i < T; i++ )
 			plum[i] = Integer.parseInt(br.readLine());
 	}
 }
