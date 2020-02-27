@@ -8,6 +8,10 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int T = Integer.parseInt(st.nextToken());
 		int W = Integer.parseInt(st.nextToken());
-
+		
+		int [] plum = new int [T];
+		
+		for( int i = 0; i < N; i++ )
+			plum[i] = Integer.parseInt(br.readLine());
 	}
 }
