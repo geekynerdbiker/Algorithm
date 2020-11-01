@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -11,6 +12,8 @@ public class Main {
 
 		for (int i = 0; i < 6; i++)
 			word[i] = br.readLine();
+
+		Arrays.sort(word);
 
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
