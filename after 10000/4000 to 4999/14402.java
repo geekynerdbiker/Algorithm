@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
@@ -22,8 +21,21 @@ public class Main {
 
         Collections.sort(records);
 
-        for (int i = 0; i < N; i++)
-            System.out.println(records.get(i).name + " " +records.get(i).status);
+        if (N == 0) System.out.print(0);
+        else if (N == 1) System.out.print(1);
+        else {
+            int count = 0;
+            Record prev, curr;
+            for (int i = 1; i < N; i++) {
+                prev = records.get(i - 1);
+                curr = records.get(i);
+                count++;
+
+                if (!prev.name.equals(curr.name)) continue;
+                if (prev.status.equals("+") && curr.status.equals("-")) count--;
+            }
+            System.out.print(count);
+        }
     }
 }
 
@@ -38,7 +50,7 @@ class Record implements Comparable<Record> {
 
     @Override
     public int compareTo(Record r) {
-        if(name.compareTo(r.name) >= 0)
+        if (name.compareTo(r.name) >= 0)
             return 1;
         return -1;
     }
