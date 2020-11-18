@@ -19,12 +19,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < n; i++) {
 				k += Integer.parseInt(st.nextToken());
-				set[i] = k;
-				if (k % d == 0) count++;
-
-				for (int j = 0; j < i; j++)
-					if (Math.abs(set[j] - set[i]) % d == 0)
-						count++;
+				set[k % d]++;
 			}
 
 			System.out.println(count);
