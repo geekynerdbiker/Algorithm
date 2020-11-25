@@ -31,12 +31,25 @@ public class Main {
 
         int maxScore = 0;
         for (int j = 0; j < R; j++) {
-            int r = 0, s = 0, p = 0;
+            int[] scores = new int[3];
             for (int i = 0; i < N; i++) {
-                if (inputs[i][j] == 'R') r++;
-                else if (inputs[i][j] == 'S') s++;
-                else p++;
+                char[] hand = {'R', 'S', 'P'};
+                for (int k = 0; k < 3; k++) {
+                    if (hand[k] == 'S' && inputs[i][j] == 'P')
+                        scores[k] += 2;
+                    else if (hand[k] == 'P' && inputs[i][j] == 'R')
+                        scores[k] += 2;
+                    else if (hand[k] == 'R' && inputs[i][j] == 'S')
+                        scores[k] += 2;
+                    else if (hand[k] == 'P' && inputs[i][j] == 'P')
+                        scores[k]++;
+                    else if (hand[k] == 'R' && inputs[i][j] == 'R')
+                        scores[k]++;
+                    else if (hand[k] == 'S' && inputs[i][j] == 'S')
+                        scores[k]++;
+                }
             }
+            maxScore += Math.max(Math.max(scores[0], scores[1]), scores[2]);
         }
 
         System.out.printf("%d\n%d", score, maxScore);
