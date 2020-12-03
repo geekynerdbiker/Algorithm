@@ -22,6 +22,7 @@ public class Main {
 			System.out.print(tree[i] + " ");
 	}
 
+	
 	public static void removeNode(int [] tree, boolean [] visited, int k) {
 		tree[k] = -2;
 		visited[k] = true;
