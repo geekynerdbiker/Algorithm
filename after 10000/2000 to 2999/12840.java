@@ -20,9 +20,9 @@ public class Main {
 
 			if (query == 1) addTime(time, Integer.parseInt(st.nextToken()));
 			else if (query == 2) subTime(time, Integer.parseInt(st.nextToken()));
-			else {
+			else if (query == 3) {
 				bw.write(time[0] + " " + time[1] + " " + time[2]);
-				if(i != tc-1) bw.write("\n");
+				if (i != tc - 1) bw.write("\n");
 			}
 		}
 		bw.flush();
@@ -34,6 +34,19 @@ public class Main {
 		time[1] += s / 60;
 		s %= 60;
 		time[2] += s;
+
+		if (time[2] >= 60) {
+			time[2] %= 60;
+			time[1]++;
+		}
+
+		if (time[1] >= 60) {
+			time[1] %= 60;
+			time[0]++;
+		}
+
+		if (time[0] >= 24)
+			time[0] %= 24;
 	}
 
 	public static void subTime(int[] time, int s) {
@@ -43,14 +56,16 @@ public class Main {
 		s %= 60;
 		time[2] -= s;
 
+		if (time[2] < 0) {
+			time[1]--;
+			time[2] += 60;
+		}
+
 		if (time[1] < 0) {
 			time[0]--;
 			time[1] += 60;
 		}
 
-		if (time[2] < 0) {
-			time[1]--;
-			time[2] += 60;
-		}
+		if (time[0] < 0) time[0] = 23;
 	}
 }
