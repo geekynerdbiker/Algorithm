@@ -18,8 +18,8 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			int query = Integer.parseInt(st.nextToken());
 
-			if (query == 1) addTime(time, Integer.parseInt(st.nextToken()));
-			else if (query == 2) subTime(time, Integer.parseInt(st.nextToken()));
+			if (query == 1) addTime(time, Integer.parseInt(st.nextToken()) % 86400);
+			else if (query == 2) subTime(time, Integer.parseInt(st.nextToken()) % 86400);
 			else if (query == 3) {
 				bw.write(time[0] + " " + time[1] + " " + time[2]);
 				if (i != tc - 1) bw.write("\n");
@@ -66,6 +66,6 @@ public class Main {
 			time[1] += 60;
 		}
 
-		if (time[0] < 0) time[0] = 23;
+		if (time[0] < 0) time[0] += 24;
 	}
 }
