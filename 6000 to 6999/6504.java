@@ -38,7 +38,6 @@ public class Main {
                     sum += fibonacci.get(i);
                     fibonacciArray[i] = true;
                 }
-
             sum = 0;
             for (int i = end; i > 0; i--)
                 if (fibonacciArray[i]) sum += fibonacci.get(i - 1);
