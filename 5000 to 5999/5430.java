@@ -1,80 +1,51 @@
-import java.util.*;
 import java.io.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.StringTokenizer;
 
 public class Main {
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    private final static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    public static void main(String[] args) throws IOException{
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int T = Integer.parseInt(st.nextToken());
-        int [] dq;
+    public static void main(String[] args) throws IOException {
+        StringTokenizer st;
+        int T = Integer.parseInt(br.readLine());
 
-        for( int i = 0; i < T; i++ ) {
-            st = new StringTokenizer(br.readLine());
-            char [] command = st.nextToken().toCharArray();
+        for (int i = 0; i < T; i++) {
+            String p = br.readLine();
             int n = Integer.parseInt(br.readLine());
-            dq = new int [n];
 
-            String array = br.readLine();
-            array = array.replaceAll("[\\[\\]]", "").replaceAll(",", " ");
+            String str = br.readLine();
+            str = str.replaceAll("[^0-9]", " ");
+            st = new StringTokenizer(str);
 
-            st = new StringTokenizer(array);
-            for( int j = 0; st.hasMoreTokens(); j++ )
-                dq[j] = Integer.parseInt(st.nextToken());
+            Deque<Integer> arr = new ArrayDeque<>();
+            for (int j = 0; j < n; j++)
+                arr.add(Integer.parseInt(st.nextToken()));
 
-            func(dq, command);
-        }
-    }
+            boolean isReversed = false;
 
-    public static void func(int [] dequeue, char [] command) throws IOException {
-        int front = 0, back = dequeue.length - 1, order = 1;
-
-        for( int i = 0; i < command.length; i++ ) {
-            if( command[i] == 'D' ) {
-                if( !isRegular(dequeue, front, back) ) {
-                    System.out.println("error");
-                    return;
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == 'R') isReversed = !isReversed;
+                else {
+                    if (arr.isEmpty()) break;
+                    if (isReversed) arr.removeLast();
+                    else arr.removeFirst();
                 }
-                if( order == 1 ) front++;
-                else back--;
             }
 
-            else order *= -1;
+            if (arr.isEmpty()) System.out.println("error");
+            else {
+                int len = arr.size();
+                System.out.print('[');
+                for (int j = 0; j < len; j++) {
+                    System.out.print(arr.poll());
+                    if (j != len - 1) System.out.print(',');
+                }
+                System.out.println(']');
+            }
         }
-        print(dequeue, front, back, order);
-    }
 
-    public static void print(int [] array, int front, int back, int order) throws IOException {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append('[');
-
-        if( order == 1 )
-            for( int i = front; i <= back; i++ ) {
-                if( !isRegular(array, front, back) ) break;
-                sb.append(array[i]);
-                if( i == back ) break;
-                sb.append(',');
-            }
-
-        else
-            for( int i = back; i >= front; i-- ) {
-                if( !isRegular(array, front, back) ) break;
-                sb.append(array[i]);
-                if(i == front) break;
-                sb.append(',');
-            }
-
-        sb.append(']');
-        System.out.println(sb);
-    }
-
-    public static boolean isRegular(int [] array, int front, int back) {
-        if( front >= array.length ) return false;
-        if( back <= 0 ) return false;
-        if( front >= back ) return false;
-        return true;
+        bw.flush();
     }
 }
