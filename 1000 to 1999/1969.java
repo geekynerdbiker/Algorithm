@@ -11,7 +11,7 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
 
         String[] input = new String[N];
-        int[][] ATGC = new int[M][4];
+        int[][] ACGT = new int[M][4];
 
         for (int i = 0; i < N; i++)
             input[i] = br.readLine();
@@ -20,19 +20,19 @@ public class Main {
             for (int j = 0; j < N; j++)
                 switch (input[j].charAt(i)) {
                     case 'A': {
-                        ATGC[i][0]++;
-                        break;
-                    }
-                    case 'T': {
-                        ATGC[i][1]++;
-                        break;
-                    }
-                    case 'G': {
-                        ATGC[i][2]++;
+                        ACGT[i][0]++;
                         break;
                     }
                     case 'C': {
-                        ATGC[i][3]++;
+                        ACGT[i][1]++;
+                        break;
+                    }
+                    case 'G': {
+                        ACGT[i][2]++;
+                        break;
+                    }
+                    case 'T': {
+                        ACGT[i][3]++;
                         break;
                     }
                 }
@@ -45,15 +45,15 @@ public class Main {
             String dna = "";
 
             for (int j = 0; j < 4; j++) {
-                if (ATGC[i][j] > max) {
-                    max = ATGC[i][j];
+                if (ACGT[i][j] > max) {
+                    max = ACGT[i][j];
                     switch (j) {
                         case 0: {
                             dna = "A";
                             break;
                         }
                         case 1: {
-                            dna = "T";
+                            dna = "C";
                             break;
                         }
                         case 2: {
@@ -61,7 +61,7 @@ public class Main {
                             break;
                         }
                         case 3: {
-                            dna = "C";
+                            dna = "T";
                             break;
                         }
                     }
