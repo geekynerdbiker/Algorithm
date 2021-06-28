@@ -34,18 +34,19 @@ public class Main {
                 }
             }
 
+            StringBuilder sb = new StringBuilder();
             if (arr.isEmpty()) System.out.println("error");
             else {
                 int len = arr.size();
-                System.out.print('[');
+                sb.append('[');
                 for (int i = 0; i < len; i++) {
-                    System.out.print(arr.poll());
-                    if (i != len - 1) System.out.print(',');
+                    sb.append(arr.poll());
+                    if (i != len - 1) sb.append(',');
                 }
-                System.out.println(']');
+                sb.append(']');
             }
+            bw.write(sb.toString());
         }
-
         bw.flush();
     }
 }
