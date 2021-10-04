@@ -7,42 +7,24 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int N = Integer.parseInt(br.readLine());
-        int [] A = new int[N];
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] arr = new int[N];
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++)
-            A[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
+
+        Arrays.sort(arr);
 
         int M = Integer.parseInt(br.readLine());
-        int[] B = new int[M];
+        st = new StringTokenizer(br.readLine(), " ");
 
-        if (M != 0) st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < M; i++)
-            B[i] = Integer.parseInt(st.nextToken());
-
-        Arrays.sort(A);
-
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < M; i++) {
-            if (binarySearch(A, B[i])) bw.write("1\n");
-            else bw.write("0\n");
+            if (Arrays.binarySearch(arr, Integer.parseInt(st.nextToken())) >= 0)
+                sb.append(1).append('\n');
+            else sb.append(0).append('\n');
         }
-        bw.close();
-    }
-
-    static boolean binarySearch(int[] arr, int k) {
-        int start = 0, mid, end = arr.length -1;
-
-        if (arr[end] < k) return false;
-        else if (arr[end] == k) return true;
-        while (end - start >= 0) {
-            mid = (end - start) / 2;
-
-            if (arr[mid] == k)
-                return true;
-            if (arr[mid] > k)
-                end = mid - 1;
-            else
-                start = mid + 1;
-        }
-        return false;
+        bw.write(sb.toString());
+        bw.flush();
     }
 }
